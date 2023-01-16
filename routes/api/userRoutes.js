@@ -1,5 +1,5 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   getUsers,
   getSingleUser,
   createUser,
@@ -7,21 +7,19 @@ import {
   updateUser,
   addFriend,
   removeFriend,
-} from '../../controllers/userController';
+} = require('../../controllers/userController');
 
 const router = express.Router();
 
 router
   .route('/')
   .get(getUsers)
-  .get(getSingleUser)
   .post(createUser)
   .delete(deleteUser)
   .put(updateUser);
 
-//Add friend route
-router.route('/:userId').post(addFriend);
-//remove friend route
-router.route('/:userId/freinds/:friendId').delete(removeFriend);
+router.route('/singleUser').get(getSingleUser);
 
-export default router;
+router.route('/:userId/friends/:friendId').delete(removeFriend).post(addFriend);
+
+module.exports = router;

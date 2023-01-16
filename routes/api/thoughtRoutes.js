@@ -1,5 +1,5 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   getThoughts,
   getSingleThought,
   createThought,
@@ -7,18 +7,20 @@ import {
   deleteThought,
   addReaction,
   deleteReaction,
-} from '../../controllers/thoughtController';
+} = require('../../controllers/thoughtController');
 
 const router = express.Router();
 
 router
   .route('/')
   .get(getThoughts)
-  .get(getSingleThought)
   .post(createThought)
   .put(updateThought)
   .delete(deleteThought);
 
-router.route('/:thoughtId/reactions');
+router.route('/singleThought').get(getSingleThought);
 
-export default router;
+router.route('/:thoughtId/reactions').post(addReaction);
+router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction);
+
+module.exports = router;

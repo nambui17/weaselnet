@@ -1,4 +1,4 @@
-import { User, Thought, reactionSchema } from '../models';
+const { Thought } = require('../models');
 
 async function getThoughts(req, res) {
   try {
@@ -61,46 +61,46 @@ async function deleteThought(req, res) {
   }
 }
 
-async function addReaction(req,res) {
-    try {
-        const thought = await Thought.findOneAndUpdate(
-            {_id: req.params.thoughtId},
-            {$addToSet: { reactions: req.body} },
-            {runValidators: true, new: true}
-        )
-        if (!thought) {
-            res.status(404).json({ message: 'No thought found with that ID!' });
-            return;
-        }
-        res.status(200).json(thought);
-    } catch (err) {
-        res.status(500).json(err);
+async function addReaction(req, res) {
+  try {
+    const thought = await Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    );
+    if (!thought) {
+      res.status(404).json({ message: 'No thought found with that ID!' });
+      return;
     }
+    res.status(200).json(thought);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }
 
-async function deleteReaction(req,res) {
-    try {
-        const thought = Thought.findOneAndUpdate(
-            {_id: req.params.thoughtId},
-            {$pull: { reactions: {reactionId: req.params.reactionId}}},
-            {runValidators: true, new: true}
-        )
-        if (!thought) {
-            res.status(404).json({ message: 'No thought found with that ID!' });
-            return;
-        }
-        res.status(200).json(thought);
-    } catch (err) {
-        res.status(500).json(err);
+async function deleteReaction(req, res) {
+  try {
+    const thought = await Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { runValidators: true, new: true }
+    );
+    if (!thought) {
+      res.status(404).json({ message: 'No thought found with that ID!' });
+      return;
     }
+    res.status(200).json(thought);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }
 
-export {
+module.exports = {
   getThoughts,
   getSingleThought,
   createThought,
   updateThought,
   deleteThought,
   addReaction,
-  deleteReaction
+  deleteReaction,
 };

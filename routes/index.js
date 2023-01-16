@@ -1,5 +1,5 @@
-import express from 'express';
-import apiRoutes from './api';
+const express = require('express');
+const apiRoutes = require('./api');
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.use((req, res) => {
   return res.send('Wrong route!');
 });
 
-export default router;
+module.exports = router;
