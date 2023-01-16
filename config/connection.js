@@ -1,8 +1,8 @@
-import { connect, connection } from 'mongoose';
+const { connect, connection } = require('mongoose');
 
 connect('mongodb://localhost/weaselnet', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-export default connection;
+module.exports = connection;

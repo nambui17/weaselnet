@@ -1,9 +1,9 @@
-import reactionSchema from "./Reaction";
-import User from "./User";
-import Thought from "./Thought";
+const Reaction = require('./Reaction');
+const User = require('./User');
+const Thought = require('./Thought');
 
-export {
-    User,
-    Thought,
-    reactionSchema
-}
+module.exports = {
+  User,
+  Thought,
+  Reaction,
+};

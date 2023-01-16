@@ -1,4 +1,4 @@
-import { User, Thought, reactionSchema } from '../models';
+const { User, Thought } = require('../models');
 
 async function getUsers(req, res) {
   try {
@@ -12,7 +12,7 @@ async function getUsers(req, res) {
 //Get a single user
 async function getSingleUser(req, res) {
   try {
-    const user = await user.findOne({ _id: req.body._id });
+    const user = await User.findOne({ _id: req.body._id });
     if (!user) {
       res.status(404).json({ message: 'No user found with that ID!' });
       return;
@@ -67,7 +67,7 @@ async function addFriend(req, res) {
   try {
     const user = await User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.body } },
+      { $addToSet: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     );
     if (!user) {
@@ -96,7 +96,7 @@ async function removeFriend(req, res) {
   }
 }
 
-export {
+module.exports = {
   getUsers,
   getSingleUser,
   createUser,
