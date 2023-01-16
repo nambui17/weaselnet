@@ -1,51 +1,107 @@
-import {User, Thought, Reaction } from '../models';
+import { User, Thought, reactionSchema } from '../models';
 
-export default {
-    //Get all Users
-    async getUsers(req,res) {
-        try {
-            const users = await User.find();
-            res.json(users);
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    },
-    //Get a single user
-    async getSingleUser(req,res) {
-        try {
-            const user = await user.findOne({_id: req.params.userId});
-            res.json(user);
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    },
-    async createUser(req,res) {
-        try {
-            const user = await User.create(req.body);
-            res.json(user);
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    },
-    async deleteUser(req,res) {
-        try {
-            const user = await User.findOneAndDelete({ _id: req.params.userId });
-            if (!user) {
-                res.status(404).json({message: "No user with that ID"})
-            } else {
-                Thought.deleteMany({_id: {$in: user.applications}})
-            }
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    },
-    async updateUser(req,res) {
-        try {
-            const user = await User.findOneAndUpdate(
-                {_id: req.params.appli}
-            )
-        } catch (err) {
-
-        }
-    },
+async function getUsers(req, res) {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }
+
+//Get a single user
+async function getSingleUser(req, res) {
+  try {
+    const user = await user.findOne({ _id: req.body._id });
+    if (!user) {
+      res.status(404).json({ message: 'No user found with that ID!' });
+      return;
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function createUser(req, res) {
+  try {
+    const user = await User.create(req.body);
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+async function deleteUser(req, res) {
+  try {
+    const user = await User.findOneAndDelete({ _id: req.body._id });
+    if (!user) {
+      res.status(404).json({ message: 'No user with that ID' });
+      return;
+    } else {
+      Thought.deleteMany({ _id: { $in: user.applications } });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function updateUser(req, res) {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.body._id },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    );
+    if (!user) {
+      res.status(404).json({ message: 'No user found with this id!' });
+      return;
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function addFriend(req, res) {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.body } },
+      { runValidators: true, new: true }
+    );
+    if (!user) {
+      res.status(404).json({ message: 'No user found with this id!' });
+      return;
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function removeFriend(req, res) {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } }
+    );
+    if (!user) {
+      res.status(404).json({ message: 'No user found with this ID!' });
+      return;
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+export {
+  getUsers,
+  getSingleUser,
+  createUser,
+  deleteUser,
+  updateUser,
+  addFriend,
+  removeFriend,
+};

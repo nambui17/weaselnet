@@ -6,7 +6,8 @@ const userSchema = new Schema(
         username: {
             type: String, 
             required: true, 
-            unique: true
+            unique: true,
+            trim: true
         },
         email: {
             type: String, 
@@ -16,6 +17,11 @@ const userSchema = new Schema(
         },
         thoughts: [ Thought ],
         friends: [ this ]
+    },
+    {
+        toJSON: {
+            virtuals: true,
+          },
     }
 );
 
@@ -25,6 +31,6 @@ userSchema
         return this.friends.length;
     });
 
-const User = mongoose.model('user', userSchema);
+const User = model('user', userSchema);
 
 export default User;
