@@ -4,7 +4,7 @@
 
   ## Description
 
-  Share your thoughts, about anything you want. Create reactions to thoughts made by other users. Especially when it comes to weasels (but only if they're positive).
+  Share your thoughts, about anything you want. Create reactions to thoughts made by other users. Especially when it comes to weasels (but only if they're positive, just kidding).
 
   ## Table of Contents
 
@@ -45,7 +45,7 @@
 
   Please visit my GitHub profile or reach me at my email for any further questions!
 
-  GitHub Link: [nambui17](https://github.com/nambui17)
+  GitHub Link: [nambui17](https://github.com/nambui17/weaselnet)
 
   E-mail: nam.bui17@icloud.com
 
