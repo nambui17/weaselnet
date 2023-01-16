@@ -97,7 +97,6 @@ async function removeFriend(req, res) {
 }
 
 export {
-  //Get all Users
   getUsers,
   getSingleUser,
   createUser,
