@@ -1,4 +1,3 @@
-
 import { Schema, model } from 'mongoose';
 import { Thought, Reaction} from '../models';
 
